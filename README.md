@@ -20,7 +20,7 @@ https://your-fitforge-site.netlify.app
 
 ### Home
 
-![FitForge Home](./public/images/home.jpg)
+![FitForge Home](./public/images/Home.jpg)
 
 ### Training Plan
 
