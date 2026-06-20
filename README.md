@@ -20,16 +20,18 @@ https://your-fitforge-site.netlify.app
 
 ### Home
 
-![FitForge Home](./images/home.jpg)
+![FitForge Home](./public/images/home.jpg)
 
 ### Training Plan
 
-![Workout Details](./images/trainingplan.jpg)
-![Excerices for the Day](./images/sets.jpg)
+![Workout Details](./public/images/trainingplan.jpg)
+
+![Exercises for the Day](./public/images/sets.jpg)
 
 ### Exercise Description
 
-![Excercise modal](./images/description.jpg)
+![Exercise Modal](./public/images/description.jpg) 
+
 
 ---
 
@@ -235,8 +237,8 @@ Publish directory: dist
 
 Built by **Pratyakshya Mishra**
 
-* GitHub: ![Link](https://github.com/Pratyakshya10)
-* LinkedIn: ![Link](https://www.linkedin.com/in/pratyakshya-mishra-12a80a39a/)
+* GitHub: ![https://github.com/Pratyakshya10](https://github.com/Pratyakshya10)
+* LinkedIn: ![https://www.linkedin.com/in/pratyakshya-mishra-12a80a39a/](https://www.linkedin.com/in/pratyakshya-mishra-12a80a39a/)
 
 ---
 
