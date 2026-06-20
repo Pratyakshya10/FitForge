@@ -1,27 +1,25 @@
-import { useState } from 'react'
-import { workoutProgram as training_plan } from '../utils/index.js'
-import WorkoutCard from './WorkoutCard.jsx'
+import { useState } from "react"
+import { workoutProgram as training_plan } from "../utils/index.js"
+import WorkoutCard from "./WorkoutCard.jsx"
 
 export default function Grid() {
-    const [selectedWorkout, setSelectedWorkout] = useState(4)
-
-    const isLocked = true
+    const [selectedWorkout, setSelectedWorkout] = useState(null)
 
     return (
         <div className="training-grid-plan">
             {Object.keys(training_plan).map((workout, workoutIndex) => {
                 const type =
                     workoutIndex % 3 === 0
-                        ? 'Push'
+                        ? "Push"
                         : workoutIndex % 3 === 1
-                        ? 'Pull'
-                        : 'Legs'
+                        ? "Pull"
+                        : "Legs"
 
                 const trainingPlan = training_plan[workout]
 
                 const dayNum =
                     workoutIndex + 1 < 10
-                        ? '0' + (workoutIndex + 1)
+                        ? "0" + (workoutIndex + 1)
                         : workoutIndex + 1
 
                 const icon =
@@ -42,36 +40,25 @@ export default function Grid() {
                             dayNum={dayNum}
                             icon={icon}
                             workoutIndex={workoutIndex}
+                            closeWorkout={() => setSelectedWorkout(null)}
                         />
                     )
                 }
 
                 return (
                     <button
-                        className={`card plan-card ${isLocked ? 'inactive' : ''}`}
+                        className="card plan-card"
                         key={workoutIndex}
-                        disabled={isLocked}
-                        onClick={() => {
-                            if (!isLocked) {
-                                setSelectedWorkout(workoutIndex)
-                            }
-                        }}
+                        onClick={() => setSelectedWorkout(workoutIndex)}
                     >
                         <div className="plan-card-header">
                             <p>Day {dayNum}</p>
+                            {icon}
                         </div>
 
-                        {isLocked ? (
-                            <i className="fa-solid fa-lock"></i>
-                        ) : (
-                            icon
-                        )}
-
-                        <div className="plan-card-header">
-                            <h4>
-                                <b>{type}</b>
-                            </h4>
-                        </div>
+                        <h4>
+                            <b>{type}</b>
+                        </h4>
                     </button>
                 )
             })}
