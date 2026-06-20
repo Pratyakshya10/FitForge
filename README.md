@@ -20,17 +20,17 @@ https://your-fitforge-site.netlify.app
 
 ### Home
 
-![FitForge Home](<img width="1511" height="832" alt="Image" src="https://github.com/user-attachments/assets/eeaa6420-7a91-4f29-b98d-1b8a3f749f3c" />)
+<img width="1511" height="832" alt="Image" src="https://github.com/user-attachments/assets/eeaa6420-7a91-4f29-b98d-1b8a3f749f3c" />
 
 ### Training Plan
 
-![Workout Details](<img width="1507" height="818" alt="Image" src="https://github.com/user-attachments/assets/5bf7ce91-e403-4d71-b911-50b0755ab655" />)
+<img width="1507" height="818" alt="Image" src="https://github.com/user-attachments/assets/5bf7ce91-e403-4d71-b911-50b0755ab655" />
 
-![Exercises for the Day](<img width="1270" height="867" alt="Image" src="https://github.com/user-attachments/assets/a2b9d720-db70-43d8-b613-3079e9d09847" />)
+<img width="1270" height="867" alt="Image" src="https://github.com/user-attachments/assets/a2b9d720-db70-43d8-b613-3079e9d09847" />
 
 ### Exercise Description
 
-![Exercise Modal](<img width="1242" height="832" alt="Image" src="https://github.com/user-attachments/assets/ede45a57-4a78-421d-9145-a3484b9663d3" />) 
+<img width="1242" height="832" alt="Image" src="https://github.com/user-attachments/assets/ede45a57-4a78-421d-9145-a3484b9663d3" />
 
 
 ---
