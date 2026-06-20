@@ -5,17 +5,31 @@ import WorkoutCard from "./WorkoutCard.jsx"
 export default function Grid() {
     const [selectedWorkout, setSelectedWorkout] = useState(null)
     const [completedWorkouts, setCompletedWorkouts] = useState([])
+    const [userName, setUserName] = useState("")
 
     useEffect(() => {
         const savedCompletedWorkouts = localStorage.getItem("completedWorkouts")
+        const savedUserName = localStorage.getItem("fitforgeUserName")
 
         if (savedCompletedWorkouts) {
             setCompletedWorkouts(JSON.parse(savedCompletedWorkouts))
         }
+
+        if (savedUserName) {
+            setUserName(savedUserName)
+        }
     }, [])
+
+    function handleUserNameChange(event) {
+        const value = event.target.value
+
+        setUserName(value)
+        localStorage.setItem("fitforgeUserName", value)
+    }
 
     function saveCompletedWorkouts(updatedCompletedWorkouts) {
         setCompletedWorkouts(updatedCompletedWorkouts)
+
         localStorage.setItem(
             "completedWorkouts",
             JSON.stringify(updatedCompletedWorkouts)
@@ -38,22 +52,53 @@ export default function Grid() {
 
     function handleResetProgress() {
         const confirmReset = window.confirm(
-            "Are you sure you want to reset all workout progress?"
+            "Are you sure you want to reset your workout progress?"
         )
 
         if (!confirmReset) return
 
-        localStorage.clear()
+        Object.keys(training_plan).forEach((_, index) => {
+            localStorage.removeItem(`workoutData-${index}`)
+        })
+
+        localStorage.removeItem("completedWorkouts")
+
         setCompletedWorkouts([])
         setSelectedWorkout(null)
     }
 
     const totalWorkouts = Object.keys(training_plan).length
     const completedCount = completedWorkouts.length
-    const progressPercentage = Math.round((completedCount / totalWorkouts) * 100)
+    const progressPercentage =
+        totalWorkouts > 0
+            ? Math.round((completedCount / totalWorkouts) * 100)
+            : 0
 
     return (
         <>
+            <div className="user-card card">
+                <div>
+                    <p>
+                        {userName
+                            ? `Welcome back, ${userName}`
+                            : "Welcome to FitForge"}
+                    </p>
+                    <h3>30 Day Fitness Plan</h3>
+                </div>
+
+                <div className="user-input-box">
+                    <label htmlFor="userName">Your name</label>
+
+                    <input
+                        id="userName"
+                        type="text"
+                        placeholder="Enter your name"
+                        value={userName}
+                        onChange={handleUserNameChange}
+                    />
+                </div>
+            </div>
+
             <div className="progress-card card">
                 <div>
                     <p>Progress</p>
@@ -64,7 +109,10 @@ export default function Grid() {
 
                 <div className="progress-actions">
                     <p>{progressPercentage}%</p>
-                    <button onClick={handleResetProgress}>Reset</button>
+
+                    <button type="button" onClick={handleResetProgress}>
+                        Reset
+                    </button>
                 </div>
             </div>
 
@@ -133,6 +181,7 @@ export default function Grid() {
                             key={workoutIndex}
                             disabled={!isUnlocked}
                             onClick={() => setSelectedWorkout(workoutIndex)}
+                            type="button"
                         >
                             <div className="plan-card-header">
                                 <p>Day {dayNum}</p>
