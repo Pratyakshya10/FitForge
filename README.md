@@ -11,7 +11,7 @@ The goal of FitForge is simple: make workout consistency feel visual, structured
 **Live Site:** *https://fitforge0.netlify.app/*
 
 ```txt
-https://your-fitforge-site.netlify.app
+https://fitforge0.netlify.app/
 ```
 
 ---
