@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import Modal from "./Modal.jsx"
 
 export default function WorkoutCard(props) {
-    const { trainingPlan, type, dayNum, icon } = props
+    const { trainingPlan, type, dayNum, icon , closeWorkout, completeWorkout} = props
     const { warmup = [], workout = [] } = trainingPlan || {}
 
     const [selectedExercise, setSelectedExercise] = useState(null)
@@ -92,9 +92,14 @@ export default function WorkoutCard(props) {
                             className="weight-input"
                             placeholder="N/A"
                             disabled
-                        />
+                        />  
                     </React.Fragment>
                 ))}
+
+                <div className="workout-buttons">
+                    <button onClick={closeWorkout}>Save & Exit</button>
+                    <button onClick={completeWorkout}>Complete</button>
+                </div>
             </div>
         </div>
     )
