@@ -14,33 +14,95 @@ export default function Grid() {
         }
     }, [])
 
-    function handleCompleteWorkout(workoutIndex) {
-        const updatedCompletedWorkouts = [...new Set([...completedWorkouts, workoutIndex])]
-
+    function saveCompletedWorkouts(updatedCompletedWorkouts) {
         setCompletedWorkouts(updatedCompletedWorkouts)
-        localStorage.setItem("completedWorkouts", JSON.stringify(updatedCompletedWorkouts))
+        localStorage.setItem(
+            "completedWorkouts",
+            JSON.stringify(updatedCompletedWorkouts)
+        )
+    }
+
+    function handleCompleteWorkout(workoutIndex, workoutData) {
+        localStorage.setItem(
+            `workoutData-${workoutIndex}`,
+            JSON.stringify(workoutData)
+        )
+
+        const updatedCompletedWorkouts = [
+            ...new Set([...completedWorkouts, workoutIndex]),
+        ]
+
+        saveCompletedWorkouts(updatedCompletedWorkouts)
         setSelectedWorkout(null)
     }
 
+    function handleResetProgress() {
+        const confirmReset = window.confirm(
+            "Are you sure you want to reset all workout progress?"
+        )
+
+        if (!confirmReset) return
+
+        localStorage.clear()
+        setCompletedWorkouts([])
+        setSelectedWorkout(null)
+    }
+
+    const totalWorkouts = Object.keys(training_plan).length
+    const completedCount = completedWorkouts.length
+    const progressPercentage = Math.round((completedCount / totalWorkouts) * 100)
+
     return (
-        <div className="training-grid-plan">
-            {Object.keys(training_plan).map((workout, workoutIndex) => {
-                const type =
-                    workoutIndex % 3 === 0
-                        ? "Push"
-                        : workoutIndex % 3 === 1
-                        ? "Pull"
-                        : "Legs"
+        <>
+            <div className="progress-card card">
+                <div>
+                    <p>Progress</p>
+                    <h3>
+                        {completedCount}/{totalWorkouts} days completed
+                    </h3>
+                </div>
 
-                const trainingPlan = training_plan[workout]
+                <div className="progress-actions">
+                    <p>{progressPercentage}%</p>
+                    <button onClick={handleResetProgress}>Reset</button>
+                </div>
+            </div>
 
-                const dayNum =
-                    workoutIndex + 1 < 10
-                        ? "0" + (workoutIndex + 1)
-                        : workoutIndex + 1
+            <div className="progress-bar">
+                <div
+                    className="progress-fill"
+                    style={{ width: `${progressPercentage}%` }}
+                ></div>
+            </div>
 
-                const icon =
-                    workoutIndex % 3 === 0 ? (
+            <div className="training-grid-plan">
+                {Object.keys(training_plan).map((workout, workoutIndex) => {
+                    const type =
+                        workoutIndex % 3 === 0
+                            ? "Push"
+                            : workoutIndex % 3 === 1
+                            ? "Pull"
+                            : "Legs"
+
+                    const trainingPlan = training_plan[workout]
+
+                    const dayNum =
+                        workoutIndex + 1 < 10
+                            ? "0" + (workoutIndex + 1)
+                            : workoutIndex + 1
+
+                    const isCompleted = completedWorkouts.includes(workoutIndex)
+
+                    const isUnlocked =
+                        workoutIndex === 0 ||
+                        completedWorkouts.includes(workoutIndex - 1) ||
+                        isCompleted
+
+                    const icon = isCompleted ? (
+                        <i className="fa-solid fa-check"></i>
+                    ) : !isUnlocked ? (
+                        <i className="fa-solid fa-lock"></i>
+                    ) : workoutIndex % 3 === 0 ? (
                         <i className="fa-solid fa-dumbbell"></i>
                     ) : workoutIndex % 3 === 1 ? (
                         <i className="fa-solid fa-weight-hanging"></i>
@@ -48,44 +110,48 @@ export default function Grid() {
                         <i className="fa-solid fa-bolt"></i>
                     )
 
-                const isCompleted = completedWorkouts.includes(workoutIndex)
+                    if (workoutIndex === selectedWorkout) {
+                        return (
+                            <WorkoutCard
+                                key={workoutIndex}
+                                trainingPlan={trainingPlan}
+                                workoutIndex={workoutIndex}
+                                type={type}
+                                dayNum={dayNum}
+                                icon={icon}
+                                closeWorkout={() => setSelectedWorkout(null)}
+                                completeWorkout={handleCompleteWorkout}
+                            />
+                        )
+                    }
 
-                if (workoutIndex === selectedWorkout) {
                     return (
-                        <WorkoutCard
+                        <button
+                            className={`card plan-card ${
+                                !isUnlocked ? "inactive" : ""
+                            } ${isCompleted ? "completed" : ""}`}
                             key={workoutIndex}
-                            trainingPlan={trainingPlan}
-                            workoutIndex={workoutIndex}
-                            type={type}
-                            dayNum={dayNum}
-                            icon={icon}
-                            closeWorkout={() => setSelectedWorkout(null)}
-                            completeWorkout={() => handleCompleteWorkout(workoutIndex)}
-                        />
-                    )
-                }
+                            disabled={!isUnlocked}
+                            onClick={() => setSelectedWorkout(workoutIndex)}
+                        >
+                            <div className="plan-card-header">
+                                <p>Day {dayNum}</p>
+                                {icon}
+                            </div>
 
-                return (
-                    <button
-                        className={`card plan-card ${isCompleted ? "completed" : ""}`}
-                        key={workoutIndex}
-                        onClick={() => setSelectedWorkout(workoutIndex)}
-                    >
-                        <div className="plan-card-header">
-                            <p>Day {dayNum}</p>
-                            {isCompleted ? (
-                                <i className="fa-solid fa-check"></i>
-                            ) : (
-                                icon
+                            <h4>
+                                <b>{type}</b>
+                            </h4>
+
+                            {!isUnlocked && (
+                                <small>Complete previous day first</small>
                             )}
-                        </div>
 
-                        <h4>
-                            <b>{type}</b>
-                        </h4>
-                    </button>
-                )
-            })}
-        </div>
+                            {isCompleted && <small>Completed</small>}
+                        </button>
+                    )
+                })}
+            </div>
+        </>
     )
 }
