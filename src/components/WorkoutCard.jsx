@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Modal from "./Modal.jsx"
+import { exerciseDescriptions } from "../utils/index.js"
 
 export default function WorkoutCard(props) {
     const {
@@ -36,6 +37,17 @@ export default function WorkoutCard(props) {
         })
     }
 
+    function handleExerciseHelp(exercise) {
+        const description =
+            exerciseDescriptions[exercise.name] ||
+            "No description available for this exercise yet."
+
+        setSelectedExercise({
+            ...exercise,
+            description,
+        })
+    }
+
     function handleSaveAndExit() {
         localStorage.setItem(
             `workoutData-${workoutIndex}`,
@@ -62,8 +74,9 @@ export default function WorkoutCard(props) {
 
                         <button
                             className="help-icon"
-                            onClick={() => setSelectedExercise(exercise)}
+                            onClick={() => handleExerciseHelp(exercise)}
                             type="button"
+                            title="View exercise details"
                         >
                             <i className="fas fa-question-circle"></i>
                         </button>

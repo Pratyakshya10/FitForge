@@ -5,13 +5,6 @@ export default function Modal(props) {
         return null
     }
 
-    const description =
-        exercise.description ||
-        exercise.desc ||
-        exercise.instructions ||
-        exercise.howTo ||
-        "No description available for this exercise yet."
-
     return (
         <div className="modal-container">
             <button
@@ -31,12 +24,12 @@ export default function Modal(props) {
 
                 <div className="modal-section">
                     <h4>Name</h4>
-                    <h2>{exercise.name || "Exercise"}</h2>
+                    <h2>{exercise.name}</h2>
                 </div>
 
                 <div className="modal-section">
                     <h4>Description</h4>
-                    <p>{description}</p>
+                    <p>{exercise.description}</p>
                 </div>
             </div>
         </div>
