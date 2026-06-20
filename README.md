@@ -216,23 +216,6 @@ Publish directory: dist
 
 ---
 
-## Future Improvements
-
-* Add authentication
-* Add backend database support
-* Add user workout history
-* Add streak tracking
-* Add calendar view
-* Add charts for progress tracking
-* Add exercise images or videos
-* Add custom workout creation
-* Add difficulty levels
-* Add mobile-first workout mode
-* Add BMI or fitness goal setup
-* Add rest day recommendations
-
----
-
 ## Author
 
 Built by **Pratyakshya Mishra**
