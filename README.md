@@ -168,7 +168,7 @@ This makes the workout plan easier to understand, especially for beginners.
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/FitForge.git
+git clone https://github.com/Pratyakshya10/FitForge
 ```
 
 Move into the project folder:
