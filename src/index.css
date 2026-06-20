@@ -292,3 +292,91 @@ footer {
     align-items: center;
     justify-content: center;
 }
+
+.progress-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.progress-card p,
+.progress-card h3 {
+    margin: 0;
+}
+
+.progress-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.progress-actions button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--background-muted);
+    border: 1px solid var(--border-primary);
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--color-link);
+    transition: width 0.3s ease;
+}
+
+.plan-card:disabled {
+    cursor: not-allowed;
+}
+
+.plan-card.inactive {
+    opacity: 0.55;
+}
+
+.plan-card.completed {
+    border-color: var(--color-link);
+    box-shadow: 0 0 0 1px var(--color-link);
+}
+
+.plan-card small {
+    display: block;
+    margin-top: 0.5rem;
+    opacity: 0.75;
+}
+
+.workout-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.workout-buttons button {
+    min-width: 120px;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.6rem;
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-link);
+    background: var(--background-muted);
+    color: var(--color-link);
+    font-weight: 700;
+}
+
+.weight-input {
+    min-width: 100px;
+}
