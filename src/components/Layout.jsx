@@ -10,11 +10,19 @@ export default function Layout(props) {
     )
 
     const footer = (
-        <footer>
-            <p>&copy; {new Date().getFullYear()} FitForge. All rights reserved.<br/><a href = "https://www.fantacss.smoljames.com"
-             target="_blank">Fantacss</a></p>
-                <p>Built By: Pratyakshya</p>
-        </footer>
+        <footer className="app-footer">
+    <p>
+        © 2026 <span>FitForge</span>. All rights reserved.
+    </p>
+
+    <p>
+        Built by <strong>Pratyakshya</strong>
+    </p>
+
+    <a href="https://www.fantacss.smoljames.com/" target="_blank">
+        Fantacss
+    </a>
+</footer>
     )
 
     return(

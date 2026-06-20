@@ -380,3 +380,155 @@ footer {
 .weight-input {
     min-width: 100px;
 }
+
+
+/* User card */
+
+.user-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 0.9rem;
+}
+
+.user-card p,
+.user-card h3 {
+    margin: 0;
+}
+
+.user-card p {
+    color: var(--color-link);
+    font-weight: 700;
+}
+
+.user-input-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 220px;
+}
+
+.user-input-box label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-link);
+}
+
+.user-input-box input {
+    padding: 0.75rem 1rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--border-primary);
+    background: var(--background-muted);
+    color: inherit;
+}
+
+/* Footer */
+
+.app-footer {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    text-align: center;
+    border-top: 1px solid var(--border-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.app-footer p {
+    margin: 0;
+}
+
+.app-footer span,
+.app-footer strong {
+    color: var(--color-link);
+}
+
+.app-footer a {
+    color: var(--color-link);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.app-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Modal fixes */
+
+.modal-content {
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid var(--border-primary);
+    background: var(--background-muted);
+    color: inherit;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close:hover {
+    border-color: var(--color-link);
+    color: var(--color-link);
+}
+
+.modal-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.modal-section h4,
+.modal-section h2,
+.modal-section p {
+    margin: 0;
+}
+
+.modal-section h4 {
+    color: var(--color-link);
+    font-size: 0.85rem;
+}
+
+.modal-section h2 {
+    padding-right: 2.5rem;
+}
+
+/* Make help icon actually clickable and visible */
+
+button.help-icon {
+    pointer-events: all;
+    opacity: 0.8;
+}
+
+button.help-icon:hover {
+    opacity: 1;
+    color: var(--color-link);
+}
+
+/* Mobile */
+
+@media (max-width: 640px) {
+    .user-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .user-input-box {
+        min-width: 100%;
+    }
+}
