@@ -1,11 +1,89 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Modal from "./Modal.jsx"
 
 export default function WorkoutCard(props) {
-    const { trainingPlan, type, dayNum, icon , closeWorkout, completeWorkout} = props
+    const {
+        trainingPlan,
+        workoutIndex,
+        type,
+        dayNum,
+        icon,
+        closeWorkout,
+        completeWorkout,
+    } = props
+
     const { warmup = [], workout = [] } = trainingPlan || {}
 
     const [selectedExercise, setSelectedExercise] = useState(null)
+    const [workoutData, setWorkoutData] = useState({})
+
+    useEffect(() => {
+        const savedWorkoutData = localStorage.getItem(
+            `workoutData-${workoutIndex}`
+        )
+
+        if (savedWorkoutData) {
+            setWorkoutData(JSON.parse(savedWorkoutData))
+        }
+    }, [workoutIndex])
+
+    function handleWeightChange(exerciseKey, value) {
+        setWorkoutData((prevData) => {
+            return {
+                ...prevData,
+                [exerciseKey]: value,
+            }
+        })
+    }
+
+    function handleSaveAndExit() {
+        localStorage.setItem(
+            `workoutData-${workoutIndex}`,
+            JSON.stringify(workoutData)
+        )
+
+        closeWorkout()
+    }
+
+    function handleComplete() {
+        completeWorkout(workoutIndex, workoutData)
+    }
+
+    function renderExerciseRows(exercises, sectionName) {
+        return exercises.map((exercise, exerciseIndex) => {
+            const exerciseKey = `${sectionName}-${exerciseIndex}`
+
+            return (
+                <React.Fragment key={exerciseKey}>
+                    <div className="exercise-grid">
+                        <p>
+                            {exerciseIndex + 1}. {exercise.name}
+                        </p>
+
+                        <button
+                            className="help-icon"
+                            onClick={() => setSelectedExercise(exercise)}
+                            type="button"
+                        >
+                            <i className="fas fa-question-circle"></i>
+                        </button>
+                    </div>
+
+                    <p className="exercise-info">{exercise.sets}</p>
+                    <p className="exercise-info">{exercise.reps}</p>
+
+                    <input
+                        className="weight-input"
+                        placeholder="N/A"
+                        value={workoutData[exerciseKey] || ""}
+                        onChange={(event) =>
+                            handleWeightChange(exerciseKey, event.target.value)
+                        }
+                    />
+                </React.Fragment>
+            )
+        })
+    }
 
     return (
         <div className="workout-container">
@@ -38,29 +116,7 @@ export default function WorkoutCard(props) {
                 <h6>Reps</h6>
                 <h6 className="weight-input">Max Weight</h6>
 
-                {warmup.map((warmupExercise, warmupIndex) => (
-                    <React.Fragment key={warmupIndex}>
-                        <div className="exercise-grid">
-                            <p>{warmupIndex + 1}. {warmupExercise.name}</p>
-
-                            <button
-                                className="help-icon"
-                                onClick={() => setSelectedExercise(warmupExercise)}
-                            >
-                                <i className="fas fa-question-circle"></i>
-                            </button>
-                        </div>
-
-                        <p className="exercise-info">{warmupExercise.sets}</p>
-                        <p className="exercise-info">{warmupExercise.reps}</p>
-
-                        <input
-                            className="weight-input"
-                            placeholder="N/A"
-                            disabled
-                        />
-                    </React.Fragment>
-                ))}
+                {renderExerciseRows(warmup, "warmup")}
             </div>
 
             <div className="workout-grid">
@@ -72,34 +128,17 @@ export default function WorkoutCard(props) {
                 <h6>Reps</h6>
                 <h6 className="weight-input">Max Weight</h6>
 
-                {workout.map((workoutExercise, workoutIndex) => (
-                    <React.Fragment key={workoutIndex}>
-                        <div className="exercise-grid">
-                            <p>{workoutIndex + 1}. {workoutExercise.name}</p>
+                {renderExerciseRows(workout, "workout")}
+            </div>
 
-                            <button
-                                className="help-icon"
-                                onClick={() => setSelectedExercise(workoutExercise)}
-                            >
-                                <i className="fas fa-question-circle"></i>
-                            </button>
-                        </div>
+            <div className="workout-buttons">
+                <button type="button" onClick={handleSaveAndExit}>
+                    Save & Exit
+                </button>
 
-                        <p className="exercise-info">{workoutExercise.sets}</p>
-                        <p className="exercise-info">{workoutExercise.reps}</p>
-
-                        <input
-                            className="weight-input"
-                            placeholder="N/A"
-                            disabled
-                        />  
-                    </React.Fragment>
-                ))}
-
-                <div className="workout-buttons">
-                    <button onClick={closeWorkout}>Save & Exit</button>
-                    <button onClick={completeWorkout}>Complete</button>
-                </div>
+                <button type="button" onClick={handleComplete}>
+                    Complete
+                </button>
             </div>
         </div>
     )
