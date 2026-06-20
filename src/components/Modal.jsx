@@ -3,7 +3,11 @@ export default function Modal(props) {
 
     return (
         <div className="modal-container">
-            <button className="modal-underlay" onClick={handleCloseModal}></button>
+            <button
+                className="modal-underlay"
+                onClick={handleCloseModal}
+                type="button"
+            ></button>
 
             <div className="modal-content">
                 <div>
