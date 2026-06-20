@@ -3,7 +3,7 @@ import { workoutProgram as training_plan } from '../utils/index.js'
 import WorkoutCard from './WorkoutCard.jsx'
 
 export default function Grid() {
-    const [selectedWorkout, setSelectedWorkout] = useState(null)
+    const [selectedWorkout, setSelectedWorkout] = useState(4)
 
     const isLocked = true
 
@@ -19,11 +19,29 @@ export default function Grid() {
 
                 const trainingPlan = training_plan[workout]
 
+                const dayNum =
+                    workoutIndex + 1 < 10
+                        ? '0' + (workoutIndex + 1)
+                        : workoutIndex + 1
+
+                const icon =
+                    workoutIndex % 3 === 0 ? (
+                        <i className="fa-solid fa-dumbbell"></i>
+                    ) : workoutIndex % 3 === 1 ? (
+                        <i className="fa-solid fa-weight-hanging"></i>
+                    ) : (
+                        <i className="fa-solid fa-bolt"></i>
+                    )
+
                 if (workoutIndex === selectedWorkout) {
                     return (
                         <WorkoutCard
                             key={workoutIndex}
                             trainingPlan={trainingPlan}
+                            type={type}
+                            dayNum={dayNum}
+                            icon={icon}
+                            workoutIndex={workoutIndex}
                         />
                     )
                 }
@@ -40,25 +58,19 @@ export default function Grid() {
                         }}
                     >
                         <div className="plan-card-header">
-                            <p>
-                                Day {(workoutIndex + 1 < 10)
-                                    ? '0' + (workoutIndex + 1)
-                                    : workoutIndex + 1}
-                            </p>
+                            <p>Day {dayNum}</p>
                         </div>
 
                         {isLocked ? (
                             <i className="fa-solid fa-lock"></i>
-                        ) : workoutIndex % 3 === 0 ? (
-                            <i className="fa-solid fa-dumbbell"></i>
-                        ) : workoutIndex % 3 === 1 ? (
-                            <i className="fa-solid fa-weight-hanging"></i>
                         ) : (
-                            <i className="fa-solid fa-bolt"></i>
+                            icon
                         )}
 
                         <div className="plan-card-header">
-                            <h4><b>{type}</b></h4>
+                            <h4>
+                                <b>{type}</b>
+                            </h4>
                         </div>
                     </button>
                 )
